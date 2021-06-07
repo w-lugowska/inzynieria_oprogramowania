@@ -2,26 +2,31 @@ import {Bar} from "./Components/Bar";
 import {BrowserRouter, Route} from "react-router-dom";
 import Switch from "react-bootstrap/Switch";
 import {PlaceHolderPage} from "./Pages/PlaceHolderPage";
+import {PetPage} from "./Pages/PetPage";
+import {LoginPage} from "./Pages/LoginPage";
+import {HomePage} from "./Pages/HomePage";
+import {CalendarPage} from "./Pages/CalendarPage";
+import {RegisterPage} from "./Pages/RegisterPage";
 
 function App() {
   return (
       <BrowserRouter>
           <Bar/>
           <Switch>
-              <Route path={"/d"}>
-                  <PlaceHolderPage text="piewsza strona"/>
+              <Route path={"/login"}>
+                <LoginPage/>
               </Route>
-              <Route path={"/c"}>
-                  <PlaceHolderPage text="druga strona"/>
+              <Route path={"/register"}>
+                <RegisterPage/>
               </Route>
-              <Route path={"/b"}>
-                  <PlaceHolderPage text="trzecia strona"/>
+              <Route path={"/calendar"}>
+                <CalendarPage/>
               </Route>
-              <Route path={"/a"}>
-                  <PlaceHolderPage text="czwarta strona"/>
+              <Route path={"/pet"}>
+                  <PetPage/>
               </Route>
-              <Route path-={"/"}>
-                  <PlaceHolderPage text={"strona główna"}/>
+              <Route path={"/home"}>
+                <HomePage/>
               </Route>
           </Switch>
       </BrowserRouter>
