@@ -1,7 +1,6 @@
 import {Bar} from "./Components/Bar";
 import {BrowserRouter, Route} from "react-router-dom";
 import Switch from "react-bootstrap/Switch";
-import {PlaceHolderPage} from "./Pages/PlaceHolderPage";
 import {PetPage} from "./Pages/PetPage";
 import {LoginPage} from "./Pages/LoginPage";
 import {HomePage} from "./Pages/HomePage";
