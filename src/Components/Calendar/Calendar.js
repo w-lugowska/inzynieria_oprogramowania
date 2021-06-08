@@ -10,7 +10,7 @@ export function Calendar() {
   useEffect(() => {
     localStorage.setItem("id", 8);
     localStorage.setItem("petId", 5);
-    localStorage.setItem("type", "vet");
+    localStorage.setItem("type", "owner");
 
     async function init() {
       let response;
