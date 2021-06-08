@@ -7,6 +7,7 @@ export function PetPage() {
   // na razie były tu testy łączenia się z backendem
   localStorage.setItem("id", "1");
   localStorage.setItem("type", "owner");
+  localStorage.setItem("petId", "2")
 
   const [pets, setPets] = useState([]);
   const [name, setName] = useState("");
@@ -23,21 +24,29 @@ export function PetPage() {
     fetchAPI();
   }, []);
 
+
+
   return (
-    <Container style={{ marginTop:50 }}>
+    <Container style={{ marginTop: 30 }}>
       <h1> Twoje zwierzaki </h1>
       {pets.map((pet) => (
-        <Row
+        <Button
           key={pet.name}
           style={{
-            alignItems: "center",
+            background: "none",
+            color: "#266DD3",
+            border: "none",
+            alignItems: "left",
             display: "flex",
             justifyContent: "center",
-            height: 100,
+            height: 50,
+            marginBottom: 10,
           }}
         >
-          <h2> {pet.name} {pet.species} </h2>
-        </Row>
+            <h3>
+              {pet.name} {pet.species}
+            </h3>
+        </Button>
       ))}
 
       <h1> Dodaj nowego zwierzaka</h1>
@@ -74,6 +83,7 @@ export function PetPage() {
                 method: "POST",
               }
             );
+            window.location.reload();
           }}
         >
           Dodaj
