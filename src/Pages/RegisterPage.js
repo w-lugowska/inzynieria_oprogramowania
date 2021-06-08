@@ -1,8 +1,6 @@
-import {PlaceHolderPage} from "./PlaceHolderPage";
+import { PlaceHolderPage } from "./PlaceHolderPage";
 
-export function RegisterPage () {
-    // todo strona z formularzem rejestracyjnym klienta lub weterynarza do wyboru
-    return (
-        <PlaceHolderPage text={"RegisterPage"}/>
-    );
+export function RegisterPage() {
+  // todo strona z formularzem rejestracyjnym klienta lub weterynarza do wyboru
+  return <PlaceHolderPage text={"RegisterPage"} />;
 }
