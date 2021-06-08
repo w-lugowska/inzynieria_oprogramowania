@@ -6,42 +6,53 @@ import {Day} from "./Day";
 export function Calendar () {
     const [activeDate, setActiveDate] = useState(new Date());
     const [visits, setVisits] = useState([]);
-    const [days, setDays] = useState([]);
     const [weeks, setWeeks] = useState([]);
-
+    const [shouldReload, setShouldReload] = useState(0);
     useEffect(() => {
         async function init() {
-            let response = await fetch("https://petclinicio.herokuapp.com/visits");
+            let response = undefined;
+            if (localStorage.getItem('type') === 'vet')  {
+                response = await fetch(`https://petclinicio.herokuapp.com/vets/${localStorage.getItem('id')}/visits`);
+            } else {
+                response = await fetch(`https://petclinicio.herokuapp.com/visits`);
+            }
+
             let json = await response.json();
             setVisits(json);
-            let numbers = [...Array(new Date(activeDate.getFullYear(), activeDate.getMonth(), 0).getDate()).keys()];
-            setDays(numbers.map(number =>
+            // localStorage.setItem('id', 3);
+            // localStorage.setItem('petId', 5);
+            // localStorage.setItem('type', "owner");
+            let numbers = [...Array(new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 0).getDate()).keys()];
+            let days = numbers.map(number =>
                 <Day
-                    number={number + 1}
-                    visits={visits.filter(visit => new Date(visit.beginTime).getDate() === number + 1)}
-                />)
-            );
-
+                    date={new Date(activeDate.getFullYear(), activeDate.getMonth(), number + 1)}
+                    visits={visits.filter(visit =>
+                        new Date(visit.beginTime).getDate() === number + 1 &&
+                        new Date(visit.beginTime).getMonth() === activeDate.getMonth() &&
+                        new Date(visit.beginTime).getFullYear() === activeDate.getFullYear()
+                    )}
+                />);
+            console.log(new Date(activeDate.getFullYear(), activeDate.getMonth(), 1).getDay());
             for(let i = 0; i < new Date(activeDate.getFullYear(), activeDate.getMonth(), 1).getDay(); i++) {
                 days.unshift(" ");
             }
-
             while (days.length < 35) {
                 days.push(" ");
             }
-
+            console.log(days)
             let weeks = [];
             while(days.length > 7) {
-                weeks.push(days.splice(days.length - 7, 7));
+                weeks.push(days.splice(0, 7));
             }
             weeks.push(days);
-            weeks.reverse();
             setWeeks(weeks);
         }
         init();
-    },[activeDate]);
+    },[activeDate, shouldReload]);
 
+    function prepareDates() {
 
+    }
     const months =
         ["styczeń",
         "luty",
@@ -66,14 +77,14 @@ export function Calendar () {
         "sobota"];
 
     return(
-        <div style={{marginTop:80, marginRight: 35}}>
-            <Row>
-                <h2>{months[activeDate.getMonth()]}</h2>
+        <div style={{marginTop:10, marginRight: 35}}>
+            <Row style={{alignItems:"center", display:"flex", justifyContent: "center"}}>
                 <Button
                     variant={"dark"}
                     onClick={() => setActiveDate(new Date(activeDate.getFullYear(), activeDate.getMonth() - 1, 1))}
                 >poprzedni
                 </Button>
+                <h2 className={"m-2"}>{months[activeDate.getMonth()]} {activeDate.getFullYear()}</h2>
                 <Button
                     variant={"dark"}
                     onClick={() => setActiveDate(new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 1))}
@@ -83,6 +94,7 @@ export function Calendar () {
             <CustomTable
                 head={daysOfTheWeek}
                 data={weeks}
+                xd={visits}
             />
         </div>
     );
