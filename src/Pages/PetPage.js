@@ -3,8 +3,6 @@ import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 
 export function PetPage() {
-  //TODO: strona do zarządzania zwierzętami klienta, dodawania nowych, wyboru zwierzaków do wizyty
-  // na razie były tu testy łączenia się z backendem
   localStorage.setItem("id", "1");
   localStorage.setItem("type", "owner");
   localStorage.setItem("petId", "2")
@@ -21,13 +19,14 @@ export function PetPage() {
       );
       setPets(await response.json());
     }
+
     fetchAPI();
   }, []);
 
 
 
   return (
-    <Container style={{ marginTop: 40 }}>
+    <Container style={{ marginTop: 50 }}>
       <h1> Twoje zwierzaki </h1>
       {pets.map((pet) => (
         <Button
@@ -43,9 +42,10 @@ export function PetPage() {
             marginBottom: 10,
           }}
         >
-            <h3>
-              {pet.name} {pet.species}
-            </h3>
+          <h2>
+            {" "}
+            {pet.name} {pet.species}{" "}
+          </h2>
         </Button>
       ))}
 
