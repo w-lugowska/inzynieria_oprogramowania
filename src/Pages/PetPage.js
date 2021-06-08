@@ -1,11 +1,11 @@
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 
 export function PetPage() {
   localStorage.setItem("id", "1");
   localStorage.setItem("type", "owner");
-  localStorage.setItem("petId", "2")
+  localStorage.setItem("petId", "2");
 
   const [pets, setPets] = useState([]);
   const [name, setName] = useState("");
@@ -22,8 +22,6 @@ export function PetPage() {
 
     fetchAPI();
   }, []);
-
-
 
   return (
     <Container style={{ marginTop: 50 }}>
