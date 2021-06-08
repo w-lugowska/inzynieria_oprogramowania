@@ -6,75 +6,59 @@ import {Day} from "./Day";
 export function Calendar () {
     const [activeDate, setActiveDate] = useState(new Date());
     const [visits, setVisits] = useState([]);
-    const [weeks, setWeeks] = useState([]);
     const [shouldReload, setShouldReload] = useState(0);
     useEffect(() => {
+
+        localStorage.setItem("id", 8);
+        localStorage.setItem("petId", 5);
+        localStorage.setItem("type", "vet");
+
         async function init() {
-            let response = undefined;
+            let response;
             if (localStorage.getItem('type') === 'vet')  {
                 response = await fetch(`https://petclinicio.herokuapp.com/vets/${localStorage.getItem('id')}/visits`);
             } else {
                 response = await fetch(`https://petclinicio.herokuapp.com/visits`);
             }
-
             let json = await response.json();
             setVisits(json);
-            // localStorage.setItem('id', 3);
-            // localStorage.setItem('petId', 5);
-            // localStorage.setItem('type', "owner");
-            let numbers = [...Array(new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 0).getDate()).keys()];
-            let days = numbers.map(number =>
-                <Day
-                    date={new Date(activeDate.getFullYear(), activeDate.getMonth(), number + 1)}
-                    visits={visits.filter(visit =>
-                        new Date(visit.beginTime).getDate() === number + 1 &&
-                        new Date(visit.beginTime).getMonth() === activeDate.getMonth() &&
-                        new Date(visit.beginTime).getFullYear() === activeDate.getFullYear()
-                    )}
-                />);
-            console.log(new Date(activeDate.getFullYear(), activeDate.getMonth(), 1).getDay());
-            for(let i = 0; i < new Date(activeDate.getFullYear(), activeDate.getMonth(), 1).getDay(); i++) {
-                days.unshift(" ");
-            }
-            while (days.length < 35) {
-                days.push(" ");
-            }
-            console.log(days)
-            let weeks = [];
-            while(days.length > 7) {
-                weeks.push(days.splice(0, 7));
-            }
-            weeks.push(days);
-            setWeeks(weeks);
         }
         init();
     },[activeDate, shouldReload]);
 
-    function prepareDates() {
+    function createWeeks(visits) {
+        let numbers = [...Array(new Date(activeDate.getFullYear(), activeDate.getMonth() + 1, 0).getDate()).keys()];
+        let days = numbers.map(number =>
+            <Day
+                date={new Date(activeDate.getFullYear(), activeDate.getMonth(), number + 1)}
+                visits={visits.filter(visit =>
+                    new Date(visit.beginTime).getDate() === number + 1 &&
+                    new Date(visit.beginTime).getMonth() === activeDate.getMonth() &&
+                    new Date(visit.beginTime).getFullYear() === activeDate.getFullYear()
+                )}
+                setShouldReload={setShouldReload}
+            />);
 
+        for(let i = 0; i < new Date(activeDate.getFullYear(), activeDate.getMonth(), 1).getDay(); i++) {
+            days.unshift(" ");
+        }
+
+        while (days.length < 35) {
+            days.push(" ");
+        }
+        let weeks = [];
+        while(days.length > 7) {
+            weeks.push(days.splice(0, 7));
+        }
+        weeks.push(days);
+        return weeks;
     }
-    const months =
-        ["styczeń",
-        "luty",
-        "marzec",
-        "kwiecień",
-        "maj",
-        "czerwiec",
-        "lipiec",
-        "sierpień",
-        "wrzesień",
-        "październik",
-        "listopad",
-        "grudzień"];
 
-    const daysOfTheWeek =
-        ["niedziela",
-        "poniedziałek",
-        "wtorek",
-        "środa",
-        "czwartek",
-        "piątek",
-        "sobota"];
+    const months = ["styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec",
+        "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"];
+
+    const daysOfTheWeek = ["niedziela", "poniedziałek", "wtorek",
+        "środa", "czwartek", "piątek", "sobota"];
 
     return(
         <div style={{marginTop:10, marginRight: 35}}>
@@ -93,8 +77,7 @@ export function Calendar () {
             </Row>
             <CustomTable
                 head={daysOfTheWeek}
-                data={weeks}
-                xd={visits}
+                data={createWeeks(visits)}
             />
         </div>
     );

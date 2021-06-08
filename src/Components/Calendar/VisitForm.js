@@ -1,7 +1,7 @@
 import {Button, Form} from "react-bootstrap";
 import {useState} from "react";
 
-export function VisitForm({date}) {
+export function VisitForm({date, setShouldReload}) {
     const [beginTime, setBeginTime] = useState();
     const [endTime, setEndTime] = useState();
     return (
@@ -22,7 +22,7 @@ export function VisitForm({date}) {
                 `&endTime=` +
                 new Date(date.getFullYear(), date.getMonth(), date.getDate(), endTime.substring(0,2), endTime.substring(3,5)).toISOString(),
             {method: "POST"}
-            )}
+            ).then(response => setShouldReload(Math.random()))}
             >stwórz wizytę</Button>
         </Form>
     );

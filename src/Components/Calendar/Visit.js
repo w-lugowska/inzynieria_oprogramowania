@@ -1,6 +1,6 @@
 import {Button, Card} from "react-bootstrap";
 
-export function Visit({visit}) {
+export function Visit({visit, setShouldReload}) {
     return (
         <Card className={visit.petName === null? "alert-primary" : "alert-danger"} style={{ width: '12rem', maxHeight: '7rem', marginBottom: 10}}>
             <Card.Body>
@@ -9,7 +9,7 @@ export function Visit({visit}) {
                         <Button
                             onClick={() => fetch(
                                 `https://petclinicio.herokuapp.com/vets/${localStorage.getItem("id")}/visits/${visit.visitId}/delete`,
-                                {method: "DELETE"})}
+                                {method: "DELETE"}).then(response => setShouldReload(Math.random()))}
                             style={{position:"absolute",marginTop:46 ,marginLeft:130}}
                         >x
                         </Button>
@@ -18,7 +18,7 @@ export function Visit({visit}) {
                             <Button
                                 onClick={() => fetch(
                                     `https://petclinicio.herokuapp.com/owners/${localStorage.getItem("id")}/pets/${localStorage.getItem("petId")}/visits/${visit.visitId}/assign`,
-                                   {method: "PUT"})}
+                                   {method: "PUT"}).then(response => setShouldReload(Math.random()))}
                                 style={{position:"absolute",marginTop:30 ,marginLeft:90}}
                             >zapisz
                             </Button>

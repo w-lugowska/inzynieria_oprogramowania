@@ -2,12 +2,12 @@ import {Visit} from "./Visit";
 import {Button, OverlayTrigger, Popover, Row} from "react-bootstrap";
 import {VisitForm} from "./VisitForm";
 
-export function Day({date, visits}) {
+export function Day({date, visits, setShouldReload}) {
     const popover = (
         <Popover id="popover-basic">
             <Popover.Title as="h3">stwórz wizytę</Popover.Title>
             <Popover.Content>
-               <VisitForm date={date}/>
+               <VisitForm date={date} setShouldReload={setShouldReload}/>
             </Popover.Content>
         </Popover>
     );
@@ -24,7 +24,7 @@ export function Day({date, visits}) {
                         null
                 }
             </Row>
-            {visits.map(visit => <Visit visit={visit}/>)}
+            {visits.map(visit => <Visit visit={visit} setShouldReload={setShouldReload}/>)}
         </div>
     );
 }
