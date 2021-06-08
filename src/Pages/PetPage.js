@@ -27,7 +27,7 @@ export function PetPage() {
 
 
   return (
-    <Container style={{ marginTop: 30 }}>
+    <Container style={{ marginTop: 40 }}>
       <h1> Twoje zwierzaki </h1>
       {pets.map((pet) => (
         <Button
