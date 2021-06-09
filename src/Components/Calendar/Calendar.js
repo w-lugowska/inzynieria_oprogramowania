@@ -2,26 +2,22 @@ import { CustomTable } from "./CustomTable";
 import { useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Day } from "./Day";
+import { sendRequestWithToken } from "../../utils/Authorization";
 
 export function Calendar() {
   const [activeDate, setActiveDate] = useState(new Date());
   const [visits, setVisits] = useState([]);
   const [shouldReload, setShouldReload] = useState(0);
   useEffect(() => {
-    localStorage.setItem("id", 8);
-    localStorage.setItem("petId", 5);
-    localStorage.setItem("type", "owner");
-
     async function init() {
+      localStorage.setItem("petId", 5);
       let response;
       if (localStorage.getItem("type") === "vet") {
-        response = await fetch(
-          `https://petclinicio.herokuapp.com/vets/${localStorage.getItem(
-            "id"
-          )}/visits`
+        response = await sendRequestWithToken(
+          `vets/${localStorage.getItem("id")}/visits`
         );
       } else {
-        response = await fetch(`https://petclinicio.herokuapp.com/visits`);
+        response = await sendRequestWithToken("visits");
       }
       let json = await response.json();
       setVisits(json);

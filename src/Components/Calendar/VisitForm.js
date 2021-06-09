@@ -1,5 +1,6 @@
 import { Button, Form } from "react-bootstrap";
 import { useState } from "react";
+import { sendRequestWithToken } from "../../utils/Authorization";
 
 export function VisitForm({ date, setShouldReload }) {
   const [beginTime, setBeginTime] = useState();
@@ -24,10 +25,8 @@ export function VisitForm({ date, setShouldReload }) {
       </Form.Group>
       <Button
         onClick={() =>
-          fetch(
-            `https://petclinicio.herokuapp.com/vets/${localStorage.getItem(
-              "id"
-            )}/visits/create-visit` +
+          sendRequestWithToken(
+            `vets/${localStorage.getItem("id")}/visits/create-visit` +
               `?beginTime=` +
               new Date(
                 date.getFullYear(),
@@ -44,11 +43,11 @@ export function VisitForm({ date, setShouldReload }) {
                 endTime.substring(0, 2),
                 endTime.substring(3, 5)
               ).toISOString(),
-            { method: "POST" }
+            "POST"
           ).then((response) => setShouldReload(Math.random()))
         }
       >
-        stwórz wizytę
+        zatwierdź
       </Button>
     </Form>
   );

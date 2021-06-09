@@ -1,6 +1,7 @@
 import { Button, Container, Form, FormGroup } from "react-bootstrap";
 import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { login } from "../utils/Authorization";
 
 export function LoginPage() {
   const [password, setPassword] = useState();
@@ -36,7 +37,13 @@ export function LoginPage() {
               style={{ width: 440 }}
               variant={"success"}
               className={"mt-2"}
-              // onClick={() => {login(username, password).then(response => setShouldRedirect(true)).catch(() => setNotCorrect(true)); setUsername(""); setPassword("")}}
+              onClick={() => {
+                login(username, password)
+                  .then((response) => setShouldRedirect(true))
+                  .catch(() => setNotCorrect(true));
+                setUsername("");
+                setPassword("");
+              }}
             >
               Zatwierdź
             </Button>

@@ -1,6 +1,7 @@
 import { Button, Container } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
+import { sendRequestWithToken } from "../utils/Authorization";
 
 export function PetPage() {
   localStorage.setItem("id", "1");
@@ -14,12 +15,10 @@ export function PetPage() {
 
   useEffect(() => {
     async function fetchAPI() {
-      let response = await fetch(
-        `https://petclinicio.herokuapp.com/owners/${ownerId}/pets`
-      );
-      setPets(await response.json());
+      let response = await sendRequestWithToken(`owners/${ownerId}/pets`);
+      let json = await response.json();
+      setPets(json);
     }
-
     fetchAPI();
   }, []);
 

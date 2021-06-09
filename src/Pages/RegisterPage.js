@@ -1,4 +1,3 @@
-import { PlaceHolderPage } from "./PlaceHolderPage";
 import { useState } from "react";
 import { Button, Container, Form, FormGroup } from "react-bootstrap";
 import { Link, Redirect } from "react-router-dom";
@@ -12,7 +11,7 @@ export function RegisterPage() {
 
   return (
     <div>
-      <Container style={{ padding: 350 }}>
+      <Container style={{ padding: 300 }}>
         <Form>
           <FormGroup>
             <h2 style={{ textAlign: "center" }}>zarejestruj się</h2>
@@ -36,29 +35,61 @@ export function RegisterPage() {
               value={username}
               onChange={(text) => setRepeatedPassword(text.target.value)}
             />
-            {notCorrect ? (
-              <Form.Text style={{ color: "red" }}>
-                wprowadzono niepoprawne dane logowania
-              </Form.Text>
-            ) : null}
-            <Button
-              style={{ width: 440 }}
-              variant={"danger"}
+            <Form.Control
+              type={"text"}
               className={"mt-2"}
-              // onClick={() => {login(username, password).then(response => setShouldRedirect(true)).catch(() => setNotCorrect(true)); setUsername(""); setPassword("")}}
-            >
-              Zatwierdź
-            </Button>
-            <Link to={"/login"}>
-              <Button
-                style={{ width: 440 }}
-                variant={"outline-dark"}
+              placeholder="imię"
+              value={username}
+              onChange={(text) => setRepeatedPassword(text.target.value)}
+            />
+            <Form.Control
+              type={"text"}
+              className={"mt-2"}
+              placeholder="nazwisko"
+              value={username}
+              onChange={(text) => setRepeatedPassword(text.target.value)}
+            />
+            <Form.Group>
+              <Form.Control
+                type={"text"}
                 className={"mt-2"}
+                placeholder="kod dostępu dla weterynarza"
+                value={username}
+                onChange={(text) => setRepeatedPassword(text.target.value)}
+              />
+              <Form.Text>*wypełnia tylko weterynarz</Form.Text>
+            </Form.Group>
+            <Form.Group>
+              {notCorrect ? (
+                <Form.Text style={{ color: "red" }}>
+                  wprowadzono niepoprawne dane logowania
+                </Form.Text>
+              ) : null}
+              <Button
+                style={{ width: 540 }}
+                variant={"danger"}
+                className={"mt-2"}
+                // onClick={() => {
+                //   login(username, password)
+                //     .then((response) => setShouldRedirect(true))
+                //     .catch(() => setNotCorrect(true));
+                //   setUsername("");
+                //   setPassword("");
+                // }}
               >
-                zaloguj się
+                Zatwierdź
               </Button>
-            </Link>
-            {shouldRedirect ? <Redirect to={"/"} /> : null}
+              <Link to={"/login"}>
+                <Button
+                  style={{ width: 540 }}
+                  variant={"outline-dark"}
+                  className={"mt-2"}
+                >
+                  zaloguj się
+                </Button>
+              </Link>
+              {shouldRedirect ? <Redirect to={"/"} /> : null}
+            </Form.Group>
           </FormGroup>
         </Form>
       </Container>

@@ -1,4 +1,5 @@
 import { Button, Card } from "react-bootstrap";
+import { sendRequestWithToken } from "../../utils/Authorization";
 
 export function Visit({ visit, setShouldReload }) {
   return (
@@ -10,12 +11,15 @@ export function Visit({ visit, setShouldReload }) {
         {localStorage.getItem("type") === "vet" ? (
           <Button
             onClick={() =>
-              fetch(
-                `https://petclinicio.herokuapp.com/vets/${localStorage.getItem(
-                  "id"
-                )}/visits/${visit.visitId}/delete`,
-                { method: "DELETE" }
-              ).then((response) => setShouldReload(Math.random()))
+              sendRequestWithToken(
+                `vets/${localStorage.getItem("id")}/visits/${
+                  visit.visitId
+                }/delete`,
+                "DELETE"
+              ).then((response) => {
+                setShouldReload(Math.random());
+                console.log("xd to działa");
+              })
             }
             style={{ position: "absolute", marginTop: 46, marginLeft: 130 }}
           >
@@ -24,13 +28,11 @@ export function Visit({ visit, setShouldReload }) {
         ) : visit.petName === null ? (
           <Button
             onClick={() =>
-              fetch(
-                `https://petclinicio.herokuapp.com/owners/${localStorage.getItem(
-                  "id"
-                )}/pets/${localStorage.getItem("petId")}/visits/${
-                  visit.visitId
-                }/assign`,
-                { method: "PUT" }
+              sendRequestWithToken(
+                `owners/${localStorage.getItem("id")}` +
+                  `/pets/${localStorage.getItem("petId")}` +
+                  `/visits/${visit.visitId}/assign`,
+                "PUT"
               ).then((response) => setShouldReload(Math.random()))
             }
             style={{ position: "absolute", marginTop: 30, marginLeft: 90 }}

@@ -21,8 +21,8 @@ export function Day({ date, visits, setShouldReload }) {
           </OverlayTrigger>
         ) : null}
       </Row>
-      {visits.map((visit) => (
-        <Visit visit={visit} setShouldReload={setShouldReload} />
+      {visits.map((visit, index) => (
+        <Visit key={index} visit={visit} setShouldReload={setShouldReload} />
       ))}
     </div>
   );
