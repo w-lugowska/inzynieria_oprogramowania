@@ -4,8 +4,8 @@ import { Link, Redirect } from "react-router-dom";
 import { login } from "../utils/Authorization";
 
 export function LoginPage() {
-  const [password, setPassword] = useState();
-  const [username, setUsername] = useState();
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [notCorrect, setNotCorrect] = useState(false);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
@@ -37,6 +37,7 @@ export function LoginPage() {
               style={{ width: 440 }}
               variant={"success"}
               className={"mt-2"}
+              disabled={username === "" || password === ""}
               onClick={() => {
                 login(username, password)
                   .then((response) => setShouldRedirect(true))
@@ -56,7 +57,7 @@ export function LoginPage() {
                 zarejestruj się
               </Button>
             </Link>
-            {shouldRedirect ? <Redirect to={"/"} /> : null}
+            {shouldRedirect ? <Redirect to={"/home"} /> : null}
           </FormGroup>
         </Form>
       </Container>

@@ -19,7 +19,17 @@ export function Bar() {
         </Nav>
         <Nav>
           <Link to="/login">
-            <Button variant={"outline-danger"}>wyloguj</Button>
+            <Button
+              onClick={() => {
+                localStorage.removeItem("id");
+                localStorage.removeItem("petId");
+                localStorage.removeItem("type");
+                localStorage.removeItem("token");
+              }}
+              variant={"outline-danger"}
+            >
+              wyloguj
+            </Button>
           </Link>
         </Nav>
       </Navbar.Collapse>
