@@ -1,8 +1,13 @@
 import { PlaceHolderPage } from "./PlaceHolderPage";
+import { Redirect } from "react-router-dom";
 
 export function HomePage() {
   return (
-    // todo strona z danymi użytkownika i linkami do innych stron
-    <PlaceHolderPage text={"strona główna"} />
+    <div>
+      {localStorage.getItem("token") === null ? (
+        <Redirect to={"/login"} />
+      ) : null}
+      <PlaceHolderPage text={"strona główna"} />
+    </div>
   );
 }

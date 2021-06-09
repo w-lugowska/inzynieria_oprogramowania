@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { Day } from "./Day";
 import { sendRequestWithToken } from "../../utils/Authorization";
+import { Redirect } from "react-router-dom";
 
 export function Calendar() {
   const [activeDate, setActiveDate] = useState(new Date());
@@ -10,7 +11,6 @@ export function Calendar() {
   const [shouldReload, setShouldReload] = useState(0);
   useEffect(() => {
     async function init() {
-      localStorage.setItem("petId", 5);
       let response;
       if (localStorage.getItem("type") === "vet") {
         response = await sendRequestWithToken(
@@ -97,6 +97,9 @@ export function Calendar() {
 
   return (
     <div style={{ marginTop: 10, marginRight: 35 }}>
+      {localStorage.getItem("token") === null ? (
+        <Redirect to={"/login"} />
+      ) : null}
       <Row
         style={{
           alignItems: "center",
