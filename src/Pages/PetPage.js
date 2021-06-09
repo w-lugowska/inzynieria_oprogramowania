@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import { sendRequestWithToken } from "../utils/Authorization";
 
 export function PetPage() {
-  localStorage.setItem("id", "1");
-  localStorage.setItem("type", "owner");
-  localStorage.setItem("petId", "2");
 
   const [pets, setPets] = useState([]);
   const [name, setName] = useState("");

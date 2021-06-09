@@ -10,4 +10,5 @@ export function HomePage() {
       <PlaceHolderPage text={"strona główna"} />
     </div>
   );
+  // :)
 }
